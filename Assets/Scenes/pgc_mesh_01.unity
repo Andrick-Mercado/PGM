@@ -330,8 +330,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3b40e5b8cc656b43b560f3f6f06a5c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xSize: 10
-  ySize: 10
+  materialMesh: {fileID: 2100000, guid: fc3a18106257a5940837525c73968038, type: 2}
+  xSize: 50
+  zSize: 50
+  WaveHeight: 0.25
+  WaveSpeed: 5
 --- !u!4 &1941324437
 Transform:
   m_ObjectHideFlags: 0
