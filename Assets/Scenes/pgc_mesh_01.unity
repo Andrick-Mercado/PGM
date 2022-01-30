@@ -331,6 +331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   materialMesh: {fileID: 2100000, guid: fc3a18106257a5940837525c73968038, type: 2}
+  materialSphere: {fileID: 2100000, guid: 90b91554eecf681488ba84dbe3f64e70, type: 2}
   xSize: 50
   zSize: 50
   WaveHeight: 0.25

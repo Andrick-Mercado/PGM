@@ -10,7 +10,10 @@ public class PGC_Mesh : MonoBehaviour
     private MeshCollider _meshCollider;
     private Vector3[] _vertices;
 
+    //material for mesh
     public Material materialMesh;
+    //material for sphere
+    public Material materialSphere;
 
     //grid size
     public int xSize;
@@ -19,7 +22,7 @@ public class PGC_Mesh : MonoBehaviour
     //wave variables
     public float WaveHeight;
     public float WaveSpeed;
-    private Vector3[] baseHeight;
+    private Vector3[] BaseHeights;//holds original heights
 
     private void Awake()
     {
@@ -44,22 +47,22 @@ public class PGC_Mesh : MonoBehaviour
 
     void MeshBuilder()
     {
-        //GetComponent<MeshFilter>().mesh = _mesh = new Mesh();  //uncomment if doesnt work
         _meshFilter.mesh = _mesh = new Mesh();
-
 
         _vertices = new Vector3[( xSize + 1 ) * (zSize + 1 )];
 
+        //makes vertices based on xSize and zSize
         for (int i = 0, z = 0; z <= zSize; z++)
         {
             for (int x = 0; x <= xSize; x++, i++)
             {
-                _vertices[i] = new Vector3(x, 0, z); // _vertices[i] = new Vector3(x, y);
+                _vertices[i] = new Vector3(x, 0, z); 
             }
         }
 
         int[] triangles = new int[xSize * zSize * 6];
 
+        //creates triangles based on vertices above
         for (int ti = 0, vi = 0, z = 0; z < zSize; z++, vi++)
         {
             for (int x = 0; x < xSize; x++, ti += 6, vi++)
@@ -88,22 +91,26 @@ public class PGC_Mesh : MonoBehaviour
     {
         //create a sphere and add it to the middle of the mesh
         GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphere.transform.position = new Vector3(xSize/2, WaveHeight*5, zSize/2);
+        sphere.transform.position = new Vector3(xSize/2, WaveHeight*2, zSize/2);
         sphere.AddComponent<Rigidbody>();
+        sphere.GetComponent<MeshRenderer>().material = materialSphere;
     }
 
     void MeshWaves()
     {
-        if (baseHeight == null)
-            baseHeight = _mesh.vertices;
+        if (BaseHeights == null)//base case
+            BaseHeights = _mesh.vertices;
 
-        Vector3[] vertices = new Vector3[baseHeight.Length];
+        Vector3[] vertices = new Vector3[BaseHeights.Length];
+
         for (int i = 0; i < vertices.Length; i++)
         {
-            Vector3 vertex = baseHeight[i];
-            vertex.y += Mathf.Sin(Time.time * WaveSpeed + baseHeight[i].x + baseHeight[i].y + baseHeight[i].z) * WaveHeight;
+            Vector3 vertex = BaseHeights[i];
+            vertex.y += Mathf.Sin(Time.time * WaveSpeed + BaseHeights[i].x + BaseHeights[i].y + BaseHeights[i].z) * WaveHeight;
             vertices[i] = vertex;
         }
+
+        //update vertices
         _mesh.vertices = vertices;
         _mesh.RecalculateNormals();
 

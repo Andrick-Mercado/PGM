@@ -1,0 +1,9 @@
+References
+Used for the coding part
+	1. https://gamedev.stackexchange.com/questions/126407/how-to-simulate-waves-in-unity
+	2. https://docs.unity3d.com/ScriptReference/GameObject.CreatePrimitive.html
+
+Outside pictures
+used to make materials
+	1. https://pixabay.com/illustrations/moe-woman-girl-manga-anime-comic-595960/
+	2. https://pixabay.com/photos/water-sea-caribbean-background-1330252/
