@@ -2,6 +2,7 @@ References
 Used for the coding part
 	1. https://gamedev.stackexchange.com/questions/126407/how-to-simulate-waves-in-unity
 	2. https://docs.unity3d.com/ScriptReference/GameObject.CreatePrimitive.html
+	3. https://catlikecoding.com/unity/tutorials/procedural-grid/
 
 Outside pictures
 used to make materials

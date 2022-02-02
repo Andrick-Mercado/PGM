@@ -1,28 +1,58 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PGC_Mesh : MonoBehaviour
 {
+    //material for mesh
+    [SerializeField]
+    [Tooltip ("Material for Wave mesh")]
+    private Material materialMesh;
+
+    //material for sphere
+    [SerializeField]
+    [Tooltip("Material for sphere mesh")]
+    private Material materialSphere;
+
+    //grid size
+    [SerializeField]
+    [Tooltip("grid size on x-axis")]
+    private int xSize;
+
+    [SerializeField]
+    [Tooltip("grid size on z-axis")]
+    private int zSize;
+
+    //wave variables
+    [SerializeField]
+    [Tooltip("Waves height")]
+    private float WaveHeight;
+
+    [SerializeField]
+    [Tooltip("Waves speed")]
+    private float WaveSpeed;
+
+    //holds original heights
+    private Vector3[] BaseHeights;
+
+    //components for wave mesh
     private MeshRenderer _meshRenderer;
     private MeshFilter _meshFilter;
     private Mesh _mesh;
     private MeshCollider _meshCollider;
     private Vector3[] _vertices;
+    private Vector2[] _uv;
 
-    //material for mesh
-    public Material materialMesh;
-    //material for sphere
-    public Material materialSphere;
+    //camera to follow ball
+    [SerializeField]
+    [Tooltip("Camera that will follow the sphere")]
+    private Camera _sceneCamera;
 
-    //grid size
-    public int xSize;
-    public int zSize;
+    [SerializeField]
+    [Tooltip("Offset for camera control")]
+    private float xOffsetCamera, yOffsetCamera, zOffsetCamera;
 
-    //wave variables
-    public float WaveHeight;
-    public float WaveSpeed;
-    private Vector3[] BaseHeights;//holds original heights
+    //sphere object
+    private GameObject _sphere;
+
 
     private void Awake()
     {
@@ -39,10 +69,14 @@ public class PGC_Mesh : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //create wave effects
         MeshWaves();
+
+        //make camera follow sphere
+        _sceneCamera.transform.position = new Vector3( _sphere.transform.position.x + xOffsetCamera,
+            _sphere.transform.position.y + yOffsetCamera, _sphere.transform.position.z + zOffsetCamera);
     }
 
     void MeshBuilder()
@@ -50,13 +84,15 @@ public class PGC_Mesh : MonoBehaviour
         _meshFilter.mesh = _mesh = new Mesh();
 
         _vertices = new Vector3[( xSize + 1 ) * (zSize + 1 )];
+        _uv = new Vector2[_vertices.Length];
 
         //makes vertices based on xSize and zSize
         for (int i = 0, z = 0; z <= zSize; z++)
         {
             for (int x = 0; x <= xSize; x++, i++)
             {
-                _vertices[i] = new Vector3(x, 0, z); 
+                _vertices[i] = new Vector3(x, 0, z);
+                _uv[i] = new Vector2((float)x / xSize, (float)z / zSize);
             }
         }
 
@@ -77,6 +113,7 @@ public class PGC_Mesh : MonoBehaviour
         // draw triangles
         _mesh.Clear();
         _mesh.vertices = _vertices;
+        _mesh.uv = _uv;
         _mesh.triangles = triangles;
         _mesh.RecalculateNormals();
 
@@ -90,10 +127,10 @@ public class PGC_Mesh : MonoBehaviour
     void CreateSpherePrimitive()
     {
         //create a sphere and add it to the middle of the mesh
-        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphere.transform.position = new Vector3(xSize/2, WaveHeight*2, zSize/2);
-        sphere.AddComponent<Rigidbody>();
-        sphere.GetComponent<MeshRenderer>().material = materialSphere;
+        _sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        _sphere.transform.position = new Vector3(xSize/2, WaveHeight*2, zSize / 2);
+        _sphere.AddComponent<Rigidbody>();
+        _sphere.GetComponent<MeshRenderer>().material = materialSphere;
     }
 
     void MeshWaves()
@@ -106,7 +143,7 @@ public class PGC_Mesh : MonoBehaviour
         for (int i = 0; i < vertices.Length; i++)
         {
             Vector3 vertex = BaseHeights[i];
-            vertex.y += Mathf.Sin(Time.time * WaveSpeed + BaseHeights[i].x + BaseHeights[i].y + BaseHeights[i].z) * WaveHeight;
+            vertex.y += (Mathf.Sin(Time.time * WaveSpeed + BaseHeights[i].x + BaseHeights[i].y + BaseHeights[i].z) * WaveHeight);
             vertices[i] = vertex;
         }
 
