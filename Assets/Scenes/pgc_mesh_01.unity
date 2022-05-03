@@ -330,12 +330,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3b40e5b8cc656b43b560f3f6f06a5c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  materialMesh: {fileID: 2100000, guid: fc3a18106257a5940837525c73968038, type: 2}
+  materialMesh: {fileID: 2100000, guid: 696cf6f8708f73046811c68f0203f55e, type: 2}
   materialSphere: {fileID: 2100000, guid: 90b91554eecf681488ba84dbe3f64e70, type: 2}
-  xSize: 100
-  zSize: 100
+  xSize: 20
+  zSize: 10
   WaveHeight: 0.25
-  WaveSpeed: 5
+  WaveSpeed: 2
   _sceneCamera: {fileID: 963194227}
   xOffsetCamera: 0
   yOffsetCamera: 2
@@ -347,11 +347,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1941324435}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}

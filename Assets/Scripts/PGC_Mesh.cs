@@ -65,7 +65,7 @@ public class PGC_Mesh : MonoBehaviour
     void Start()
     {
         MeshBuilder();
-        CreateSpherePrimitive();
+        //CreateSpherePrimitive();
     }
 
     // Update is called once per frame
@@ -75,8 +75,8 @@ public class PGC_Mesh : MonoBehaviour
         MeshWaves();
 
         //make camera follow sphere
-        _sceneCamera.transform.position = new Vector3( _sphere.transform.position.x + xOffsetCamera,
-            _sphere.transform.position.y + yOffsetCamera, _sphere.transform.position.z + zOffsetCamera);
+        // _sceneCamera.transform.position = new Vector3( _sphere.transform.position.x + xOffsetCamera,
+        //     _sphere.transform.position.y + yOffsetCamera, _sphere.transform.position.z + zOffsetCamera);
     }
 
     void MeshBuilder()
